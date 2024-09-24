@@ -13,31 +13,30 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   var todoDatabase = TodoDatabase();
 
-  List<TodoModel> todoList= [];
+  List<TodoModel> todoList = [];
 
   @override
   void initState() {
-    todoList= todoDatabase.getTodos();
+    todoList = todoDatabase.getTodos();
   }
 
   final _controller = TextEditingController();
-  
-  void onCheckedBoxChanged(bool? value, int index){
+
+  void onCheckedBoxChanged(bool? value, int index) {
     setState(() {
-      todoList[index].isCompleted = ! todoList[index].isCompleted;
+      todoList[index].isCompleted = !todoList[index].isCompleted;
       todoDatabase.updateTodo(index, todoList[index]);
     });
   }
 
-  void onCancelDialog(){
+  void onCancelDialog() {
     _controller.clear();
     Navigator.pop(context);
   }
 
-  void onSaveTask(){
+  void onSaveTask() {
     setState(() {
       var newTask = TodoModel(taskName: _controller.text, isCompleted: false);
       todoList.add(newTask);
@@ -48,29 +47,43 @@ class _HomePageState extends State<HomePage> {
     Navigator.pop(context);
   }
 
-  void createNewTask(){
-    showDialog(context: context, builder: (context){
-      return DialogBox(
-        controller: _controller,
-        onCancel: onCancelDialog,
-        onSave: onSaveTask,
-      );
-    });
+  void createNewTask() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return DialogBox(
+            controller: _controller,
+            onCancel: onCancelDialog,
+            onSave: onSaveTask,
+          );
+        });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.grey.shade300,
         appBar: AppBar(
           title: Text(
             'Todo App',
             style: TextStyle(color: Colors.white),
           ),
-          backgroundColor: Colors.grey.shade900,
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/settingsPage');
+                },
+                icon: Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(Icons.settings),
+                  ),
+                ))
+          ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.grey.shade900,
           onPressed: createNewTask,
           child: Icon(
             Icons.add,
@@ -85,7 +98,7 @@ class _HomePageState extends State<HomePage> {
               return Dismissible(
                 key: Key(todoList[index].taskName),
                 direction: DismissDirection.endToStart,
-                onDismissed: (direction){
+                onDismissed: (direction) {
                   setState(() {
                     todoList.removeAt(index);
                     todoDatabase.deleteTodo(index);

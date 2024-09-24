@@ -13,7 +13,6 @@ class DialogBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.grey.shade900,
       content: Form(
         key: _formKey,
         child: TextFormField(
