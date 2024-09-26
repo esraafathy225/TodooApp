@@ -17,6 +17,7 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
+
 class SwitchWidget extends StatelessWidget {
   const SwitchWidget({super.key});
 

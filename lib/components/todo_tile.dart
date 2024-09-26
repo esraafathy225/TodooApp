@@ -29,7 +29,12 @@ class TodoTile extends StatelessWidget {
               Text(
                 taskName,
                 style: TextStyle(
-                    fontSize: 16, decoration: isCompleted? TextDecoration.lineThrough : TextDecoration.none),
+                    fontFamily: 'SFProText',
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    decoration: isCompleted
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none),
               )
             ],
           ),

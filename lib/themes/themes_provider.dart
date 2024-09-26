@@ -10,4 +10,5 @@ class ThemesProvider with ChangeNotifier {
     isDarkMode = !isDarkMode;
     notifyListeners();
   }
+
 }
